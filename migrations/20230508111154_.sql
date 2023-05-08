@@ -56,5 +56,5 @@ CREATE TABLE IF NOT EXISTS task_report_list
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE users, tasks, projects, task_reports, user_task_list, user_project_list, task_report_list;
+DROP TABLE user_task_list, user_project_list, task_report_list, users, tasks, projects, task_reports;
 -- +goose StatementEnd
