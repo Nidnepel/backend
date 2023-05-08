@@ -14,6 +14,7 @@ func (h *Handler) createWorker(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
+
 	ctx := context.Background()
 	id, err := h.services.Worker.CreateWorker(ctx, input)
 	if err != nil {
