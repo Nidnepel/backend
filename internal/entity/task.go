@@ -14,6 +14,6 @@ type TaskReportList struct {
 }
 
 const (
-	ClosedTask = true
-	OpenedTask = false
+	ClosedTask = false
+	OpenedTask = true
 )
