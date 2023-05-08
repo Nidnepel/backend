@@ -1,6 +1,10 @@
 package service
 
-import "github.com/Nidnepel/backend/internal/repository"
+import (
+	"context"
+	"github.com/Nidnepel/backend/internal/entity"
+	"github.com/Nidnepel/backend/internal/repository"
+)
 
 type Authorization interface {
 }
@@ -15,6 +19,8 @@ type Manager interface {
 }
 
 type Worker interface {
+	CreateWorker(ctx context.Context, worker entity.User) (int, error)
+	ReadWorker(ctx context.Context, id int) (*entity.User, error)
 }
 
 type Service struct {
@@ -26,5 +32,5 @@ type Service struct {
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{}
+	return &Service{Worker: NewWorkerService(repos.Worker)}
 }

@@ -33,7 +33,7 @@ func main() {
 	}
 	defer goose.Down(db.DB, "./migrations")
 
-	repos := repository.NewRepository()
+	repos := repository.NewRepository(database.NewPGX(db))
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 

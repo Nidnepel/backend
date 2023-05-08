@@ -1,5 +1,11 @@
 package repository
 
+import (
+	"context"
+	"github.com/Nidnepel/backend/internal/database"
+	"github.com/Nidnepel/backend/internal/entity"
+)
+
 type Authorization interface {
 }
 
@@ -13,6 +19,8 @@ type Manager interface {
 }
 
 type Worker interface {
+	Create(ctx context.Context, worker entity.User) (int, error)
+	Read(ctx context.Context, workerId int) (*entity.User, error)
 }
 
 type Repository struct {
@@ -23,6 +31,6 @@ type Repository struct {
 	Worker
 }
 
-func NewRepository() *Repository {
-	return &Repository{}
+func NewRepository(db database.Queryable) *Repository {
+	return &Repository{Worker: NewWorkersRepo(db)}
 }
