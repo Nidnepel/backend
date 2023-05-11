@@ -7,6 +7,7 @@ import (
 )
 
 type Authorization interface {
+	CheckUser(ctx context.Context, login string, password string) (*entity.User, error)
 }
 
 type Project interface {
@@ -15,22 +16,19 @@ type Project interface {
 type Task interface {
 }
 
-type Manager interface {
-}
-
-type Worker interface {
-	CreateWorker(ctx context.Context, worker entity.User) (int, error)
-	ReadWorker(ctx context.Context, id int) (*entity.User, error)
+type User interface {
+	CreateUser(ctx context.Context, worker entity.User) (int, error)
+	ReadUser(ctx context.Context, id int) (*entity.User, error)
+	ReadAllUsers(ctx context.Context) ([]*entity.User, error)
 }
 
 type Service struct {
 	Authorization
 	Project
 	Task
-	Manager
-	Worker
+	User
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{Worker: NewWorkerService(repos.Worker)}
+	return &Service{User: NewUserService(repos.User), Authorization: NewAuthService(repos.Authorization)}
 }

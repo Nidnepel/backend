@@ -18,31 +18,20 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	auth := router.Group("/auth")
 	{
-		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 	}
 
 	api := router.Group("/api")
 	{
-		managers := api.Group("/managers")
+		users := api.Group("/users")
 		{
-			managers.POST("/", h.createManager)
-			managers.GET("/", h.getAllManagers)
-			managers.GET("/:id", h.getManagerById)
-			managers.PUT("/:id/project/:projectId", h.deleteManagerInProjectById)
-			managers.GET("/:id/projects", h.getProjectsByManagerId)
-
-		}
-
-		workers := api.Group("/workers")
-		{
-			workers.POST("/", h.createWorker)
-			workers.POST("/:id/project/:projectId", h.createWorkerTaskInProject)
-			workers.PUT("/:id/project/:projectId", h.deleteWorkerInProjectById)
-			workers.GET("/", h.getAllWorkers)
-			workers.GET("/:id", h.getWorkerById)
-			workers.GET("/:id/projects", h.getProjectsByWorkerId)
-			workers.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)
+			users.POST("/", h.createUser)
+			users.GET("/", h.getAllUsers)
+			users.GET("/:id", h.getUserById)
+			users.PUT("/:id/project/:projectId", h.deleteUserInProjectById)
+			users.GET("/:id/projects", h.getProjectsByUserId)
+			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)
+			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)
 		}
 
 		tasks := api.Group("/tasks")

@@ -5,7 +5,7 @@ type User struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
 	Role     string `json:"role"`
-	Status   bool
+	Status   bool   `json:"status"`
 }
 
 type UserProjectList struct {
