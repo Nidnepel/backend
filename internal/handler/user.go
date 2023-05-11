@@ -81,3 +81,7 @@ func (h *Handler) createWorkerTaskInProject(context *gin.Context) {
 func (h *Handler) deleteUserInProjectById(context *gin.Context) {
 
 }
+
+func (h *Handler) getWorkersActivityInProject(context *gin.Context) {
+
+}

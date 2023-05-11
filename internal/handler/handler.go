@@ -32,6 +32,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			users.GET("/:id/projects", h.getProjectsByUserId)
 			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)
 			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)
+			users.GET("/:id/project/:projectId/activity", h.getWorkersActivityInProject)
 		}
 
 		tasks := api.Group("/tasks")
