@@ -11,6 +11,10 @@ type Authorization interface {
 }
 
 type Project interface {
+	CreateProject(ctx context.Context, project entity.Project) (int, error)
+	ReadProject(ctx context.Context, id int) (*entity.Project, error)
+	CloseProject(ctx context.Context, id int) (bool, error)
+	ReadAllProjects(ctx context.Context) ([]*entity.Project, error)
 }
 
 type Task interface {
@@ -30,5 +34,9 @@ type Service struct {
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{User: NewUserService(repos.User), Authorization: NewAuthService(repos.Authorization)}
+	return &Service{
+		User:          NewUserService(repos.User),
+		Authorization: NewAuthService(repos.Authorization),
+		Project:       NewProjectService(repos.Project),
+	}
 }

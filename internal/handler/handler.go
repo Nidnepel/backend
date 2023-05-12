@@ -28,30 +28,28 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			users.POST("/", h.createUser)
 			users.GET("/", h.getAllUsers)
 			users.GET("/:id", h.getUserById)
-			users.PUT("/:id/project/:projectId", h.deleteUserInProjectById)
-			users.GET("/:id/projects", h.getProjectsByUserId)
-			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)
-			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)
-			users.GET("/:id/project/:projectId/activity", h.getWorkersActivityInProject)
+			users.PUT("/:id/project/:projectId", h.deleteUserInProjectById)              //todo
+			users.GET("/:id/projects", h.getProjectsByUserId)                            //todo
+			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)           //todo
+			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)       //todo
+			users.GET("/:id/project/:projectId/activity", h.getWorkersActivityInProject) //todo
 		}
 
 		tasks := api.Group("/tasks")
 		{
-			tasks.GET("/:id/reports", h.getTaskReportsByTaskId)
-			tasks.POST("/:id/reports", h.createTaskReportByTaskId)
-			tasks.GET("/:id", h.getTaskById)
-			tasks.PUT("/:id", h.closeTaskById)
+			tasks.GET("/:id/reports", h.getTaskReportsByTaskId)    //todo
+			tasks.POST("/:id/reports", h.createTaskReportByTaskId) //todo
+			tasks.GET("/:id", h.getTaskById)                       //todo
+			tasks.PUT("/:id", h.closeTaskById)                     //todo
 		}
 
 		projects := api.Group("/projects")
 		{
 			projects.POST("/", h.createProject)
-			projects.PUT("/:projectId/worker/:id", h.addWorkerInProjectById)
-			projects.PUT("/:projectId/manager/:id", h.addManagerInProjectById)
+			projects.PUT("/:projectId/users/:id", h.addUserInProjectById) //todo
 			projects.GET("/", h.getAllProjects)
-			projects.GET("/:id", h.getProjectById)
-			projects.GET("/:id/workers", h.getWorkersByProjectId)
-			projects.GET("/:id/managers", h.getManagersByProjectId)
+			projects.GET("/:id", h.getProjectById)            // todo !!!returning closed projects too
+			projects.GET("/:id/users", h.getUsersByProjectId) //todo
 			projects.DELETE("/:id", h.deleteProject)
 		}
 	}

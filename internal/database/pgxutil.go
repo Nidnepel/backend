@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
@@ -15,14 +16,14 @@ func NewPGX(db *sqlx.DB) PGX {
 	return &pgxUtil{db: db}
 }
 
-func (p *pgxUtil) Exec(ctx context.Context, sqlizer Sqlizer) error {
+func (p *pgxUtil) Exec(ctx context.Context, sqlizer Sqlizer) (sql.Result, error) {
 	query, args, err := sqlizer.ToSql()
 	if err != nil {
-		return fmt.Errorf("ToSql: %w", err)
+		return nil, fmt.Errorf("ToSql: %w", err)
 	}
 
-	_, err = p.db.ExecContext(ctx, query, args...)
-	return err
+	result, err := p.db.ExecContext(ctx, query, args...)
+	return result, err
 }
 
 func (p *pgxUtil) Select(ctx context.Context, dst interface{}, sqlizer Sqlizer) error {

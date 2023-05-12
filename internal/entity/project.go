@@ -1,9 +1,10 @@
 package entity
 
 type Project struct {
-	Id     int
-	Title  string
-	Status bool
+	Id          int
+	Title       string
+	Description string
+	Status      bool
 }
 
 const (

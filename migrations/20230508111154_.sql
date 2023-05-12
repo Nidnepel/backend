@@ -19,9 +19,10 @@ CREATE TABLE IF NOT EXISTS tasks
 
 CREATE TABLE IF NOT EXISTS projects
 (
-    id     BIGSERIAL PRIMARY KEY NOT NULL unique,
-    title  text                  NOT NULL DEFAULT '',
-    status boolean               NOT NULL default true
+    id          BIGSERIAL PRIMARY KEY NOT NULL unique,
+    title       text                  NOT NULL DEFAULT '',
+    description text                  NOT NULL default '',
+    status      boolean               NOT NULL default true
 );
 
 CREATE TABLE IF NOT EXISTS task_reports
