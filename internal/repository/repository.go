@@ -20,6 +20,12 @@ type Project interface {
 }
 
 type Task interface {
+	CreateTask(ctx context.Context, newTask entity.Task) (int, error)
+	CreateReport(ctx context.Context, newReport entity.TaskReport) (int, error)
+	ReadTask(ctx context.Context, id int) (*entity.Task, error)
+	Close(ctx context.Context, taskId int) (bool, error)
+	AddTaskReportForTask(ctx context.Context, taskId, id int) error
+	ReadReports(ctx context.Context, taskId int) ([]*entity.TaskReport, error)
 }
 
 type User interface {
@@ -28,7 +34,6 @@ type User interface {
 	ReadAll(ctx context.Context) ([]*entity.User, error)
 	ReadAllProjects(ctx context.Context, userId int) ([]*entity.Project, error)
 	DeleteUserInProject(ctx context.Context, projectId, userId int) (bool, error)
-	CreateTask(ctx context.Context, newTask entity.Task) (int, error)
 	AddTaskInProject(ctx context.Context, projectId, userId, id int) error
 	GetTasks(ctx context.Context, projectId, userId int) ([]*entity.Task, error)
 	GetActivity(ctx context.Context, projectId, userId int) (*entity.Session, error)
@@ -43,5 +48,10 @@ type Repository struct {
 }
 
 func NewRepository(db database.Queryable) *Repository {
-	return &Repository{User: NewUsersRepo(db), Authorization: NewAuthRepo(db), Project: NewProjectsRepo(db)}
+	return &Repository{
+		User:          NewUsersRepo(db),
+		Authorization: NewAuthRepo(db),
+		Project:       NewProjectsRepo(db),
+		Task:          NewTasksRepo(db),
+	}
 }

@@ -1,6 +1,6 @@
 package entity
 
-type taskReport struct {
+type TaskReport struct {
 	Id          int
 	Title       string
 	Description string

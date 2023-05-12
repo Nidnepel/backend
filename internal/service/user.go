@@ -7,11 +7,15 @@ import (
 )
 
 type UserService struct {
-	repo repository.User
+	repo     repository.User
+	taskRepo repository.Task
 }
 
-func NewUserService(repo repository.User) *UserService {
-	return &UserService{repo: repo}
+func NewUserService(repo repository.User, taskRepo repository.Task) *UserService {
+	return &UserService{
+		repo:     repo,
+		taskRepo: taskRepo,
+	}
 }
 
 func (s *UserService) CreateUser(ctx context.Context, user entity.User) (int, error) {
@@ -35,7 +39,7 @@ func (s *UserService) ReadAllProjects(ctx context.Context, userId int) ([]*entit
 }
 
 func (s *UserService) CreateTask(ctx context.Context, projectId, userId int, newTask entity.Task) (int, error) {
-	id, err := s.repo.CreateTask(ctx, newTask)
+	id, err := s.taskRepo.CreateTask(ctx, newTask)
 	if err != nil {
 		return 0, err
 	}

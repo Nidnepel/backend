@@ -92,28 +92,6 @@ func (r *UsersRepo) DeleteUserInProject(ctx context.Context, projectId, userId i
 	return cntUpdateRows > 0, nil
 }
 
-func (r *UsersRepo) CreateTask(ctx context.Context, newTask entity.Task) (int, error) {
-	query := database.PSQL.
-		Insert(database.TableTask).
-		Columns(
-			"title",
-			"description",
-		).
-		Values(
-			newTask.Title,
-			newTask.Description,
-		).
-		Suffix("RETURNING id")
-
-	var id int
-	err := r.db.Get(ctx, &id, query)
-	if err != nil {
-		return id, fmt.Errorf("создание Task: %w", err)
-	}
-
-	return id, nil
-}
-
 func (r *UsersRepo) AddTaskInProject(ctx context.Context, projectId, userId, taskId int) error {
 	query := database.PSQL.
 		Insert(database.TableUserTaskList).

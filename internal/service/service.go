@@ -20,6 +20,11 @@ type Project interface {
 }
 
 type Task interface {
+	CreateTask(ctx context.Context, task entity.Task) (int, error)
+	ReadTask(ctx context.Context, id int) (*entity.Task, error)
+	CloseTask(ctx context.Context, id int) (bool, error)
+	CreateReport(ctx context.Context, taskId int, newReport entity.TaskReport) (int, error)
+	ReadAllReports(ctx context.Context, taskId int) ([]*entity.TaskReport, error)
 }
 
 type User interface {
@@ -43,8 +48,9 @@ type Service struct {
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		User:          NewUserService(repos.User),
+		User:          NewUserService(repos.User, repos.Task),
 		Authorization: NewAuthService(repos.Authorization),
 		Project:       NewProjectService(repos.Project, repos.User),
+		Task:          NewTaskService(repos.Task),
 	}
 }

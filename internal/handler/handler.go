@@ -38,10 +38,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		tasks := api.Group("/tasks")
 		{
-			tasks.GET("/:id/reports", h.getTaskReportsByTaskId)    //todo
-			tasks.POST("/:id/reports", h.createTaskReportByTaskId) //todo
-			tasks.GET("/:id", h.getTaskById)                       //todo
-			tasks.PUT("/:id", h.closeTaskById)                     //todo
+			tasks.GET("/:id/reports", h.getTaskReportsByTaskId)
+			tasks.POST("/:id/reports", h.createTaskReportByTaskId)
+			tasks.GET("/:id", h.getTaskById)
+			tasks.PUT("/:id", h.closeTaskById)
 		}
 
 		projects := api.Group("/projects")
@@ -49,7 +49,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			projects.POST("/", h.createProject)
 			projects.PUT("/:projectId/users/:id", h.addUserInProjectById)
 			projects.GET("/", h.getAllProjects)
-			projects.GET("/:id", h.getProjectById) // todo !!!returning closed projects too
+			projects.GET("/:id", h.getProjectById)
 			projects.GET("/:id/users", h.getUsersByProjectId)
 			projects.DELETE("/:id", h.deleteProject)
 		}
