@@ -28,11 +28,12 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			users.POST("/", h.createUser)
 			users.GET("/", h.getAllUsers)
 			users.GET("/:id", h.getUserById)
-			users.PUT("/:id/project/:projectId", h.deleteUserInProjectById)              //todo
-			users.GET("/:id/projects", h.getProjectsByUserId)                            //todo
-			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)           //todo
-			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)       //todo
-			users.GET("/:id/project/:projectId/activity", h.getWorkersActivityInProject) //todo
+			users.PUT("/:id/project/:projectId", h.deleteUserInProjectById)
+			users.GET("/:id/projects", h.getProjectsByUserId)
+			users.POST("/:id/project/:projectId", h.createWorkerTaskInProject)
+			users.GET("/:id/project/:projectId/tasks", h.getWorkersTasksInProject)
+			users.GET("/:id/project/:projectId/activity", h.getWorkersActivityInProject)
+			users.POST("/activity", h.sendWorkersActivityInProject)
 		}
 
 		tasks := api.Group("/tasks")

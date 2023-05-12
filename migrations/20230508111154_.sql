@@ -6,7 +6,18 @@ CREATE TABLE IF NOT EXISTS users
     login    varchar(255)          NOT NULL DEFAULT '' unique,
     password varchar(255)          NOT NULL DEFAULT '',
     status   boolean               NOT NULL default true,
-    role     varchar(50)           NOT NULL default 'Worker'
+    role     varchar(50)           NOT NULL default 'worker'
+);
+
+CREATE TABLE IF NOT EXISTS session
+(
+    id         BIGSERIAL PRIMARY KEY                          NOT NULL unique,
+    user_id    int references users (id) on delete cascade    not null,
+    project_id int references projects (id) on delete cascade not null,
+    keylog     text                                           not null default '',
+    screens    bytea[]                                        not null,
+    start      timestamp                                      not null default now(),
+    finish     timestamp                                      not null default now()
 );
 
 CREATE TABLE IF NOT EXISTS tasks
@@ -57,5 +68,5 @@ CREATE TABLE IF NOT EXISTS task_report_list
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE user_task_list, user_project_list, task_report_list, users, tasks, projects, task_reports;
+DROP TABLE user_task_list, user_project_list, task_report_list, session, users, tasks, projects, task_reports;
 -- +goose StatementEnd

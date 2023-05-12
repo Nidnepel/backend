@@ -1,13 +1,15 @@
 package entity
 
-import "github.com/jackc/pgx/pgtype"
+import (
+	"time"
+)
 
 type Session struct {
-	id        int
-	projectId int
-	userId    int
-	keylog    string
-	//	screens map[bitmap]bool
-	start  pgtype.Timestamp
-	finish pgtype.Timestamp
+	Id        int
+	ProjectId int `db:"project_id"`
+	UserId    int `db:"user_id"`
+	Keylog    string
+	Screens   [][]byte
+	Start     time.Time
+	Finish    time.Time
 }

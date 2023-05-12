@@ -26,6 +26,12 @@ type User interface {
 	CreateUser(ctx context.Context, worker entity.User) (int, error)
 	ReadUser(ctx context.Context, id int) (*entity.User, error)
 	ReadAllUsers(ctx context.Context) ([]*entity.User, error)
+	DeleteUserInProject(ctx context.Context, projectId, userId int) (bool, error)
+	ReadAllProjects(ctx context.Context, userId int) ([]*entity.Project, error)
+	CreateTask(ctx context.Context, projectId, userId int, newTask entity.Task) (int, error)
+	GetTasksInProject(ctx context.Context, projectId, userId int) ([]*entity.Task, error)
+	GetUserActivityInProject(ctx context.Context, projectId, userId int) (*entity.Session, error)
+	CreateSession(ctx context.Context, session entity.Session) (int, error)
 }
 
 type Service struct {

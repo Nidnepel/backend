@@ -4,7 +4,7 @@ type Task struct {
 	Id             int
 	Title          string
 	Description    string
-	ProgressStatus bool
+	ProgressStatus bool `db:"progress_status"`
 }
 
 type TaskReportList struct {

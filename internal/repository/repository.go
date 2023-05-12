@@ -26,6 +26,13 @@ type User interface {
 	Create(ctx context.Context, user entity.User) (int, error)
 	Read(ctx context.Context, userId int) (*entity.User, error)
 	ReadAll(ctx context.Context) ([]*entity.User, error)
+	ReadAllProjects(ctx context.Context, userId int) ([]*entity.Project, error)
+	DeleteUserInProject(ctx context.Context, projectId, userId int) (bool, error)
+	CreateTask(ctx context.Context, newTask entity.Task) (int, error)
+	AddTaskInProject(ctx context.Context, projectId, userId, id int) error
+	GetTasks(ctx context.Context, projectId, userId int) ([]*entity.Task, error)
+	GetActivity(ctx context.Context, projectId, userId int) (*entity.Session, error)
+	CreateSession(ctx context.Context, session entity.Session) (int, error)
 }
 
 type Repository struct {
