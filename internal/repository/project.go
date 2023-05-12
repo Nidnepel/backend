@@ -84,3 +84,41 @@ func (r *ProjectsRepo) ReadAll(ctx context.Context) ([]*entity.Project, error) {
 	}
 	return items, nil
 }
+
+func (r *ProjectsRepo) AddUser(ctx context.Context, userId, projectId int) (bool, error) {
+	query := database.PSQL.
+		Insert(database.TableUserProjectList).
+		Columns(
+			"user_id",
+			"project_id",
+		).
+		Values(
+			userId,
+			projectId,
+		)
+
+	_, err := r.db.Exec(ctx, query)
+	if err != nil {
+		return false, fmt.Errorf("add User in project: %w", err)
+	}
+
+	return true, nil
+}
+
+func (r *ProjectsRepo) ReadAllUsers(ctx context.Context, projectId int) ([]*entity.User, error) {
+	var items []*entity.User
+	query := database.PSQL.Select(
+		"DISTINCT users.id",
+		"login",
+		"password",
+		"role",
+		"status",
+	).From(database.TableUserProjectList).Join(database.TableUser + " ON user_project_list.user_id = users.id").Where(squirrel.Eq{
+		"project_id": projectId,
+	})
+	err := r.db.Select(ctx, &items, query)
+	if err != nil {
+		return nil, fmt.Errorf("получение all Users in Project: %w", err)
+	}
+	return items, nil
+}

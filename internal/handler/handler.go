@@ -46,10 +46,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		projects := api.Group("/projects")
 		{
 			projects.POST("/", h.createProject)
-			projects.PUT("/:projectId/users/:id", h.addUserInProjectById) //todo
+			projects.PUT("/:projectId/users/:id", h.addUserInProjectById)
 			projects.GET("/", h.getAllProjects)
-			projects.GET("/:id", h.getProjectById)            // todo !!!returning closed projects too
-			projects.GET("/:id/users", h.getUsersByProjectId) //todo
+			projects.GET("/:id", h.getProjectById) // todo !!!returning closed projects too
+			projects.GET("/:id/users", h.getUsersByProjectId)
 			projects.DELETE("/:id", h.deleteProject)
 		}
 	}

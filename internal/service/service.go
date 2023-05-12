@@ -15,6 +15,8 @@ type Project interface {
 	ReadProject(ctx context.Context, id int) (*entity.Project, error)
 	CloseProject(ctx context.Context, id int) (bool, error)
 	ReadAllProjects(ctx context.Context) ([]*entity.Project, error)
+	ReadAllUsers(ctx context.Context, projectId int) ([]*entity.User, error)
+	AddUserInProject(ctx context.Context, projectId, userId int) (bool, error)
 }
 
 type Task interface {
@@ -37,6 +39,6 @@ func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		User:          NewUserService(repos.User),
 		Authorization: NewAuthService(repos.Authorization),
-		Project:       NewProjectService(repos.Project),
+		Project:       NewProjectService(repos.Project, repos.User),
 	}
 }

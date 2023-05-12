@@ -83,10 +83,53 @@ func (h *Handler) deleteProject(c *gin.Context) {
 	c.JSON(http.StatusOK, isOk)
 }
 
-func (h *Handler) getUsersByProjectId(context *gin.Context) {
+func (h *Handler) getUsersByProjectId(c *gin.Context) {
+	projectId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
+	items, err := h.services.Project.ReadAllUsers(context.Background(), projectId)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	result := make([]*entity.User, 0)
+	for _, item := range items {
+		if item.Status == entity.ActiveUser {
+			result = append(result, item)
+		}
+	}
+
+	c.JSON(http.StatusOK, result)
 }
 
-func (h *Handler) addUserInProjectById(context *gin.Context) {
+func (h *Handler) addUserInProjectById(c *gin.Context) {
+	projectId, err := strconv.Atoi(c.Param("projectId"))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
+	userId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	ctx := context.Background()
+	isOk, err := h.services.Project.AddUserInProject(ctx, projectId, userId)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if isOk == false {
+		c.AbortWithStatusJSON(http.StatusBadRequest, isOk)
+		return
+	}
+
+	c.JSON(http.StatusOK, isOk)
 }

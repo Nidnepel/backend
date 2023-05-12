@@ -15,6 +15,8 @@ type Project interface {
 	Read(ctx context.Context, projectId int) (*entity.Project, error)
 	Close(ctx context.Context, projectId int) (bool, error)
 	ReadAll(ctx context.Context) ([]*entity.Project, error)
+	ReadAllUsers(ctx context.Context, projectId int) ([]*entity.User, error)
+	AddUser(ctx context.Context, userId, projectId int) (bool, error)
 }
 
 type Task interface {

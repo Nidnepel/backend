@@ -24,7 +24,7 @@ type UserTaskList struct {
 const (
 	ActiveUser    = true
 	NotActiveUser = false
-	AdminRole     = "Admin"
-	WorkerRole    = "Worker"
-	ManagerRole   = "Manager"
+	AdminRole     = "admin"
+	WorkerRole    = "worker"
+	ManagerRole   = "manager"
 )
